@@ -1,199 +1,199 @@
 ## Compute > Instance > Overview
 
 
-An instance is a virtual server composed of virtual CPUs, memory, and default disk. You can install your services and applications on this server and use it in combination with the various services provided by NHN Cloud.
+An instance is a virtual server that consists of a virtual CPU, memory, and underlying disk. Install customer services or applications on this server and use a combination of various services provided by NHN Cloud.
 
-## Components
+## Instance Components
 
-An instance consists of the following components:
+The elements that make up the instance are:
 
-- **Image**: Virtual disk that contains the operating system of an instance
-- **Flavor**: Virtual hardware performance specifications of an instance
-- **Availability Zone** (AZ): Physical location where an instance will be created
-- **Key Pair**: Key used to access an instance
-- **Security Group**: Network security settings for an instance
-- **Network**: Virtual network where an instance will be connected
+- **Image**: The virtual disk containing the instance's operating system
+- **Flavor**: Virtual hardware performance of the instance
+- **Availability zone**(AZ): The physical location where the instance will be created
+- ****key-pair: A key used as a means of accessing the instance.
+- **Security group**: Set up instance network security
+- **Network**: The virtual network to which the instance will be connected.
 
-Instance properties and usage change depending on these components. While settings for these components, with the exception of image and availability zone, can be modified after the creation of an instance, some flavors cannot be modified after an instance has been created. For more details on modifying instance flavors, see [Modify Flavor in the Console Guide](./console-guide/#modify-flavor).
+This information changes the properties of the instance and how it is used. Of this information, except for images and Availability Zones, settings can be changed after instance creation, but some instance types (flavors) cannot be changed after instance creation. For a detailed description of changing the instance type, [see Changing](./console-guide/#_15)the Instance Type in the Console User Guide.
 
-### Image
+### image
 
-An image is a virtual disk that contains an operating system. NHN Cloud currently supports CentOS, Debian, Ubuntu, Rocky, and Windows. For more details on the supported operating system versions, see [NHN Cloud Service Introduction](https://toast.com/service/compute/instance).
+An image is a virtual disk that contains an operating system. NHN Cloud currently supports CentOS, Debian, Ubuntu, Rocky, and Windows. For detailed supported operating system versions [please refer to NHN Cloud Service Introduction](https://toast.com/service/compute/instance).
 
-All images are configured to run optimally on an instance's virtual hardware and are safe to use as they have undergone security inspection by NHN Cloud. For more details on images, see [Image Overview](/Compute/Image/en/overview/).
+All images are set to run optimally on the virtual hardware of the instance, and they have undergone security verification by NHN Cloud, so they can be used safely. For a detailed description of the images, [see Image overview](/Compute/Image/ko/overview/).
 
-### Flavor
+### Instance flavor
 
-NHN Cloud provides various instance flavors to support a wide range of use cases. Instances can be created with flavors that best match the requirements of your services or applications. Flavors can be easily modified from the web console, even after an instance has been created.
+NHN Cloud provides various instance types to suit your needs. Depending on the characteristics of the service or application to be operated, you can create an instance of the appropriate type. You can also easily change the type of an instance that has already been created in the web console.
 
-| Type   | Description                              |
-| ------ | ---------------------------------------- |
-| m2 | A flavor with a balanced setting between CPU and memory. Recommended when performance requirements of a service or an application are not clear. |
-| c2 | A flavor optimized for high CPU performance. Recommended for web application servers or analytics systems that require high-performance computations. |
-| r2 | A flavor optimized for high memory utilization. Recommended for in-memory databases or cache servers. |
-| t2 | A low-cost instance. Recommended for servers with low workloads. |
-| u2 | The cheapest instance. Recommended for servers with low workloads. <br />This flavor utilizes local disks, which makes it a less stable but more affordable option compared to other flavors. <br />Instances of this flavor do not guarantee I/O performance. |
-| x1 | A flavor that supports high-end CPU and memory. Recommended for services or applications that require high performance. |
-
-
-### Availability Zone
-
-NHN Cloud has divided the entire system into multiple availability zones to prepare for potential failures caused by physical hardware issues. Each availability zone has its own storage system, network switch, data center space, and power supply units. A failure that occurs within one availability zone does not affect other zones, thereby increasing the availability of the whole service. You can ensure increased service availability by creating instances across multiple availability zones.
-
-The following properties hold across different availability zones.
-
-- Instances dispersed across different availability zones can communicate with each other over the network without incurring additional network usage costs.
-- Block storage can be shared between instances created within the same availability zone, but not between instances in different availability zones.
-- Floating IP can be shared across different availability zones. If one availability zone experiences a failure, floating IP can quickly be relocated to another availability zone in order to minimize downtime.
+| type    | explanation |
+| ------- | -------------------------------------------------|
+| m2 | This type balances CPU and memory. Use when the performance requirements of a service or application are not clear. |
+| c2 | This is an instance type that sets the CPU performance high. Use for web application servers or analytics systems that require high-performance computational power. |
+| r2 | It can be used when memory is used more than other resources. It is typically used for in-memory databases or cache servers. |
+| t2 | It's a low-cost instance. Use for servers that do not have high workloads. |
+| u2 | This is the cheapest instance. Use on servers that do not have high workloads.<br>Because it uses local disks, it is relatively less reliable than other instances, but it is available at a lower price.<br>Instances of this type do not guarantee I/O performance. |
+| x1 | It is a type that supports high-end CPU and memory. Use for services or applications that require high performance. |
 
 
-### Key Pair
+### Availability zone
 
-A key pair is a pair of [PKI](https://en.wikipedia.org/wiki/Public_key_infrastructure)-based public and private SSH keys. To access an instance created in NHN Cloud, a key pair is required instead of keyboard-inputted ID/PW authentication which is vulnerable to security attacks. You can safely access an instance once you have been authenticated after sending the instance your login information encoded by your key pair's private key. For more details on how to access instances using key pairs, see [How to Access Instances](#how-to-access-instances).
+NHN Cloud has divided the entire system into multiple availability zones to prepare for failures caused by physical hardware problems. Each of these availability zones has separate storage systems, network switches, surfaces, and power devices. Failures within one availability zone do not affect other availability zones, increasing the availability of the service as a whole. If you deploy instances across multiple availability zones, you can make your service more available.
 
-Key pairs can be newly generated from the NHN Cloud console during instance creation, or you can register your own existing key pairs. For more details on how to register key pairs, see [Import Key Pairs in the Console Guide](./console-guide/#key-pairs).
+Between the different availability zones, there are the following characteristics:
+
+- Instances created across multiple availability zones can communicate with each other and are not charged for network usage.
+- Block storage can be shared between instances created in the same availability zone, but block storage cannot be shared between different Availability Zones.
+- You can share floating IPs across different availability zones. If one availability zone fails, you can quickly move the floating IP to another availability zone to minimize the time of failure.
+
+
+### Key-pair
+
+A keypair is an SSH public key and private key pair based on a public key infrastructure ([PKI](https://ko.wikipedia.org/wiki/%EA%B3%B5%EA%B0%9C_%ED%82%A4_%EA%B8%B0%EB%B0%98_%EA%B5%AC%EC%A1%B0), ). To access an instance created by NHN Cloud, you must use a keypair instead of ID/password authentication with keyboard input methods that are vulnerable to security. Users can use Keypair's private key to encode login information and send it to the instance to authenticate access to the instance, and then securely access the instance. For information on how to access an instance using a keypair, [see How](#_5)to Access an Instance.
+
+Keypairs can be created in the NHN Cloud console when creating instances, or customers can register and use keypairs created by themselves. For information on how to register keypairs, [see Importing](./console-guide/#_16)Keypairs in the Console Guide.
 
 > [Caution]
-> When a key pair is newly generated, its private key is downloaded. As private keys are issued only once, be sure to store downloaded private keys in a safe disk or USB drive. If a private key is exposed, anyone can access the instance using the exposed private key, so it must be managed carefully.
+When you create a new keypair, you download the keypair's private key. The private key will not be issued twice, so please keep the downloaded private key on a secure disk or USB drive. If the private key is leaked to the outside, anyone can access the instance with the leaked private key and must be managed carefully.
 
-### Security Group
+### Security group
 
-A security group is a virtual firewall that determines network traffic delivered to an instance. For more details on security groups, see [VPC Overview](/Network/VPC/en/overview/).
+A security group is a virtual firewall that determines the network traffic that passes to your instances. For a detailed description of security groups, [see VPC overview](/Network/VPC/ko/overview/).
 
 > [Note]
-> The default security group is configured to ignore all inbound network traffic. Before accessing an instance using SSH, configure the instance's security group to allow access to the SSH port.
+The default security group is designed to ignore all inbound network traffic from outside. When you connect to an instance by SSH, set the SSH port to open in the security group to which the instance belongs, and then connect to the instance.
 
-### Network
+### network
 
-An instance must be connected to at least one network defined in the VPC in order to communicate externally. An instance that is not connected to a network cannot be accessed. To create or modify networks, see [VPC Overview](/Network/VPC/en/overview/).
+For your instance to communicate externally, it must be connected to at least one of the networks defined in your VPC. You cannot access instances that are not connected to the network. To create or change a new network, [see VPC overview](/Network/VPC/ko/overview/).
 
-## Pricing
+## billing
 
-Instances are charged using the following criteria.
+Instance billing is as follows:
 
-* Instances are charged from the moment they are created.
-* Instance default disks are charged separately according to the block storage pricing policy.
-* When instances are stopped, a 90% discount is applied to the prices on website for 90 days. After the 90 days have passed, the instances will remain as stopped and be charged at the normal rate.
+* Instances are billed from the moment they are created.
+* Instance base disks are billed separately from instances on a block storage basis.
+* When an instance is stopped, we apply a 90% discount on the price of the site for 90 days. If the suspension status exceeds 90 days, it will transition to normal rates while remaining suspended.
 
-For more details on pricing, see [Pricing](https://www.toast.com/kr/service/compute/instance#price).
+For more information on billing, please refer to the service-specific [pricing page](https://www.toast.com/kr/service/compute/instance#price).
 
-## How to Access Instances
+## How to access the instance
 
-### How to Access Linux Instances
+### How to Connect to a Linux Instance
 
-You can access your Linux instances using an SSH client. An instance cannot be accessed if its security group does not have SSH ports (22 by default) allowed. See [VPC Overview](/Network/VPC/en/overview/) for more details on how to allow SSH access. If a floating IP is not assigned to an instance, the instance cannot be accessed from outside NHN Cloud. See [VPC Overview](/Network/VPC/en/overview/) for more details on how to assign floating IP.
+To connect to a Linux instance, use an SSH client. If the instance's security group does not have an SSH access port (default 22) open, you cannot connect to it. For information on how to allow SSH access, see VPC Overview. If the instance does not have a floating IP assigned, it cannot be accessed from outside NHN Cloud. For information on how to assign a floating IP, [see VPC Overview](/Network/VPC/ko/overview/)](/Network/VPC/ko/overview/). [
 
-#### How to Access Linux Instances from Mac or Linux Using an SSH Client
+#### How to connect to a Linux instance with an SSH client on Mac or Linux
 
-Generally, Mac and Linux have SSH clients installed by default. Use a key pair's private key to access an instance from an SSH client as shown below.
+Mac and Linux usually have an SSH client installed by default. Connect from an SSH client using the private key of the key pair as shown below.
 
-CentOS instances
+CentOS Instances
 
-	$ ssh -i my_private_key.pem centos@<instance IP>
+	$ssh -i my_private_key.pem centos@<IPs of the instance>
 
-Ubuntu instances
+Ubuntu Instances
 
-	$ ssh -i my_private_key.pem ubuntu@<instance IP>
+	$ssh -i my_private_key.pem ubuntu@<IPs of the instance>
 
-Debian instances
+Debian Instances
 
-	$ ssh -i my_private_key.pem debian@<instance IP>
+	$ ssh -i my_private_key.pem debian@<IPs of the instance>
 
-Rocky instances
+Rocky Instances
 
-	$ ssh -i my_private_key.pem rocky@<instance IP>
+	$ssh -i my_private_key.pem rocky@<IPs of the instance>
 
-#### How to Access Linux Instances from Windows Using PuTTY SSH Client
+#### How to connect to a Linux instance with the PuTTY SSH client on Windows
 
-PuTTY SSH client is a widely used SSH client program for Windows. Install [PuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) before proceeding to the next steps.
+The PuTTY SSH client is a popular SSH client program on Windows. [Install PuTTY or iPuTTY](https://www.chiark.greenend.org.uk/~sgtatham/putty/latest.html) ](https://github.com/iPuTTY/iPuTTY/releases/tag/l0.70i)with [the Korean patch.
 
-Follow these three steps in order to access Linux instances from Windows using the PuTTY SSH client.
+Connecting to a Linux instance with the PuTTY SSH client on Windows involves three steps.
 
-* Convert your key pair's private key to a PuTTY-compatible private key
-* Register your PuTTY-compatible private key with PuTTY
-* Access instances with PuTTY
+* Change the private key of a keypair to the private key for PuTTY
+* Registering a private key for PuTTY with PuTTY
+* Connect to your instance with PuTTY
 
 
-##### 1. Convert Your Key Pair’s Private Key to a PuTTY-Compatible Private Key
+##### 1\. Change the private key of the keypair to the private key for PuTTY
 
-In order to use PuTTY, you must convert your private key into a PuTTY-compatible private key format. To convert your key, use puttygen which is installed along with PuTTY.
+PuTTY requires you to replace the keypair private key with PuTTY's private key format. Key translation uses puttygen, which is installed with PuTTY.
 
-![이미지1](http://static.toastoven.net/prod_instance/putty-ssh-001-en.png)
+![Image1](http://static.toastoven.net/prod_instance/putty001.png)
 
-At the bottom of the **PuTTY Key Generator** window under **Parameters**, select **RSA** for the **Type of key to generate**, and enter the default value '2048' bits for the **Number of bits in a generated key**. Under **Actions**, click **Load** next to **Load an existing private key file** to import your key pair's private key file.
+**In the PuTTY Key Generator** dialog box, under the parameters**select RSA as the key format to generate, **and enter the key**bits to generate as the ** **default '2048' bits**. **** **Under Actions**  **** click the Load** button next to **Import Private Key File and load the private key file of the key pair.
 
-![이미지2](http://static.toastoven.net/prod_instance/putty002-en.png)
+![Image2](http://static.toastoven.net/prod_instance/putty002.png)
 
-Under **Actions**, click **Save private key** next to **Save the generated key** to save the converted PuTTY-compatible private key. If you save the private key leaving the **Key passphrase** blank, the message **"Are you sure you want to save this key without a passphrase to protect it?"** will appear. In order to save your converted private key more securely, set a passphrase before saving.
+**Under Actions**  **** click the Save Private Key button next to Save** Generated Key to **save the converted keypair private key for PuTTY. If you save the private key with the key phrase blank, you are prompted to **Do you want to save this key without protecting it with the cipherphrase?** To store the converted private key more securely, set the cipher phrase**to save it. **
 
 > [Caution]
-> If you wish to be able to automatically log in to your instance, you should not set a key passphrase. When a passphrase is used, you must manually enter the private key's passphrase during login.
+To set up automatic login to your instance, you must not use a passphrase. If you use a passphrase, you must manually enter the password for the private key when you log in.
 
-##### 2. Register Your PuTTY-Compatible Private Key With Putty
+##### 2\. Register the private key for PuTTY with PuTTY
 
-Your PuTTY-compatible private key generated in the previous step can be registered by the following two methods.
+The private key for PuTTY can be registered and used in two ways.
 
-* By registering a private key file for authentication in PuTTY
-* By registering a private key file for authentication in pageant (PuTTY's authentication agent)
+* How to register and use an authentication private key file in PuTTY
+* How to register and use the authentication private key file with pageant (PuTTY Authentication Agent)
 
-**A. Registering a Private Key File for Authentication in PuTTY**
-
-
-Run PuTTY and select **Connection > SSH > Auth** from the **Category** on the left. Under **Authentication parameters** on the right, register your PuTTY-compatible private key in **Private key file for authentication**.
-
-![이미지3](http://static.toastoven.net/prod_instance/putty005-en.png)
-
-Once you register your private key, you do not have to re-register your private key file each time you access your instance if you save your access information. For details on how to save your access information, see the section below on accessing instances.
+**A. How to register and use an authentication private key file in PuTTY**
 
 
-**B. Registering a Private Key File for Authentication in pageant (PuTTY's Authentication Agent)**
+Launch PuTTY, and select **Connect > SSH > Auth**from the left ****category. Register the private key for PuTTY in the authentication private key file under Authentication ****  **parameters on the right.**
+
+![Image3](http://static.toastoven.net/prod_instance/putty005.png)
+
+If you save the access information after registering the private key, you do not need to re-register the private key file every time. For how to save access information, refer to the connection method below.
 
 
-When you run pageant, which is installed along with PuTTY, the icon shown below appears in the Windows tray. Right-click the pageant icon and select **Add Key** to add your PuTTY-compatible private key.
+**B. How to register and use the authentication private key file with pageant (PuTTY Authentication Agent)**
 
-![이미지4](http://static.toastoven.net/prod_instance/putty006.png)
 
-To confirm that your private key has been added, select **View Keys**. If successful, the added key is displayed as below.
+When you run pageant, which is installed with PuTTY, an icon appears in the Windows tray as shown below. Right-click the pageant icon and **click the Add** Key menu to add a private key for PuTTY.
 
-![이미지5](http://static.toastoven.net/prod_instance/putty008-en.png)
+![Image4](http://static.toastoven.net/prod_instance/putty006.png)
 
-Once you run pageant, it remains running in the Windows tray, so there is no need for you to rerun it every time you access an instance. However, you must run pageant again when you restart Windows.
+To verify that the private key has been added, select View**Keys. If the key was added **successfully, you should see the added key as shown below.
 
-##### 3. Access Instances With PuTTY
+![Image5](http://static.toastoven.net/prod_instance/putty008.png)
 
-Now that the PuTTY-compatible private key has been successfully registered, run PuTTY.
+Once a pageant is executed, it remains in the Windows tray and runs, so you don't have to run it again every time you connect to the instance. However, if you have a fresh start of Windows, you must run it again.
 
-![이미지6](http://static.toastoven.net/prod_instance/putty009-en.png)
+##### 3\. Connect to your instance with PuTTY
 
-Set the **Host Name** as the following.
+If the converted private key for PuTTY is successfully registered, run PuTTY.
+
+![Image6](http://static.toastoven.net/prod_instance/putty009.png)
+
+Use the host name**of the basic access information **as follows.
 
 CentOS
 
-	centos@<Instance IP>
+	centos@<IPs of the instance>
 
 Ubuntu
 
-	ubuntu@<Instance IP>
+	ubuntu@<IP of the instance>
 
 Debian
 
-	debian@<Instance IP>
+	IP of the debian@< instance>
 
 Rocky
 
-	rocky@<Instance IP>
+	rocky@<IPs of the instance>
 
-Select 22, the default SSH port, for the **Port**, and **SSH** for the **Connection type**.
+**Specify the SSH**default port of 22 for the port and SSH for the **connection** ****type.
 
-If all of the information is correct, save the session. Under **Load, save or delete a stored session**, enter the name of the session to save in **Saved Sessions** and click **Save** to save the session. If you do not save the session, your private key settings registered in 2-A are also not preserved.
+If all the information is correct, save the session. Under Load, Save, Delete**Saved Session, write the name of the session you want to save in the field under the Saved section, and click the Save button to save the session. If you do not save the session, the private key settings registered in 2-A are also not retained. ** **** 
 
-Now click **Open** to access your instance.
+**Now **click Open to connect to the instance.
 
 
-### How to Access Windows Instances
+### How to connect to a Windows instance
 
-To access your Windows server, select a Windows instance to access from the NHN Cloud console. In the instance details page under the **Access Information** tab, click **Confirm Password** to check the password set in the Windows server.
+To connect to a Windows server, select the Windows instance you want to access from the NHN Cloud console. On the Connection Information** tab of the instance details screen, click the Get Password button to confirm the password set for the **Windows server.**  **
 
-Your key pair's private key that you input in **Confirm Password** is not sent to the server, but is instead only used in your browser to decrypt the password.
+The private key of the keypair entered in Confirm**Password is not sent to the server, and is only used to decrypt the password in the browser.**
 
-Click **Connect** next to **Confirm Password** to receive the rdp file configured for remote desktop access and run it to access your Windows server. Use `Administrator` for your Windows server ID, and use the password that you checked from the NHN Cloud console.
+Click the Connect** button next to Confirm Password to receive and run the .rdp file that stores the remote desktop access settings to **connect to the Windows server.** **The ID of the Windows server is Administrator`and the password is `the password confirmed in the NHN Cloud console.
